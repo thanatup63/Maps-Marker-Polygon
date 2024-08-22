@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8">
+      <!-- Google Map ที่จะเรียกใช้ center และ addLatLng เมื่อมีการคลิก -->
+      <google-map
+        height="400px"
+        width="100%"
+        [center]="center"
+        (mapClick)="addLatLng($event)">
+        <!-- วนลูปแสดง Markers ที่ถูกสร้างขึ้น -->
+        <map-marker
+          *ngFor="let marker of markers"
+          [position]="marker.getPosition()!">
+        </map-marker>
+        <!-- วาด Polygon บนแผนที่ถ้ามีพิกัดใน polygonCoordinates -->
+        <map-polygon
+          *ngIf="polygonCoordinates.length > 0"
+          [paths]="polygonCoordinates">
+        </map-polygon>
+      </google-map>
+    </div>
+    <div class="col-md-4">
+      <!-- ปุ่มสำหรับล้างพิกัดและ Marker ทั้งหมด -->
+      <button
+        class="btn btn-primary mb-3"
+        (click)="clearAll()">
+        Clear All
+      </button>
+      <!-- แสดงพิกัด Lat และ Lng ของแต่ละจุดใน Polygon -->
+      <div *ngFor="let coord of polygonCoordinates">
+        <p>Lat: {{coord.lat}}, Lng: {{coord.lng}}</p>
+      </div>
+    </div>
+  </div>
+</div>
